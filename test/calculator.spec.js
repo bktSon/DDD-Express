@@ -3,6 +3,7 @@
 let assert = require('chai').assert;
 
 const Calculator = require('./../src/calculator');
+const signon = require('sinon');
 
 let calculator = new Calculator();
 
@@ -32,13 +33,23 @@ describe('Calculator', () => {
     });
 
     describe('#calculate()', () => {
-        calculator.addOperator('+', {
-            operate: function (a, b) {
-                return a + b;
-            }
-        });
-        it('can run operator + operator', () => {
-            assert.equal(5, calculator.calculate('+', 1, 4));
+
+
+        let fakeOperateMethod = signon.stub().returns('some result');
+        let stubOperator = {
+            operate: fakeOperateMethod
+        };
+
+        calculator.addOperator('myOperator', stubOperator);
+
+
+        it('can run operator correctly', () => {
+
+            let result = calculator.calculate('myOperator', 1, 4);
+
+            assert.equal('some result', result);
+            assert.ok(fakeOperateMethod.calledOnce);
+            assert.ok(fakeOperateMethod.calledWith(1, 4));
         })
     })
 });
