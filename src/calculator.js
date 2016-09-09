@@ -1,21 +1,27 @@
 'use strict';
 
 class Calculator {
-    sum(a, b) {
-        return a + b;
+
+    constructor() {
+        this.operators = {};
     }
 
-    minus(a, b) {
-        return a - b;
+    addOperator(name, operator) {
+        this.operators[name] = operator;
     }
-    multiply(a, b) {
-        return a * b;
-    }
-    divide(a, b) {
-        if (b == 0) {
-            throw new Error('Division by zero');
+
+    getOperator(name) {
+        let operator = this.operators[name];
+        if (!operator) {
+            throw new Error(`Operator [${name}] is not existed`)
         }
-        return a / b;
+        return this.operators[name];
+    }
+
+    calculate(name, a, b) {
+        let operator = this.getOperator(name);
+        return operator.operate(a, b);
+
     }
 }
 
