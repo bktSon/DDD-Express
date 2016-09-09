@@ -1,25 +1,29 @@
 {
-  "name": "ddd",
+  "name": "training",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/.bin/mocha",
+    "coverage": "node node_modules/.bin/istanbul cover node_modules/.bin/_mocha"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bktSon/DDD-Express.git"
   },
-  "author": "Sonbkt",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bktSon/DDD-Express/issues"
   },
   "homepage": "https://github.com/bktSon/DDD-Express#readme",
-  "dependencies": {
-    "express": "^4.14.0"
-  },
   "devDependencies": {
-    "nodemon": "^1.10.2"
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "karma": "^1.2.0",
+    "karma-chai": "^0.1.0",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.1.1",
+    "mocha": "^3.0.2"
   }
 }
