@@ -8,50 +8,42 @@ const signon = require('sinon');
 let calculator = new Calculator();
 
 describe('Calculator', () => {
-
-    describe('#addOperator() & #getOperator()', () => {
-        it('Can set operator with give name, and can get correct operator', () => {
+    describe('#setOperator() & #getOperator()', () => {
+        it('Can set Operator with give name and get correct operator', () => {
             let operator1 = {};
             let operator2 = {};
 
+            calculator.setOperator('myOperator1', operator1);
+            calculator.setOperator('myOperator2', operator2);
 
-            calculator.addOperator('myOperator1', operator1);
-            calculator.addOperator('myOperator2', operator2);
-
-            assert.strictEqual(operator1, calculator.getOperator('myOperator1'));
-            assert.strictEqual(operator2, calculator.getOperator('myOperator2'));
-            assert.notStrictEqual(operator2, calculator.getOperator('myOperator1'));
+            assert.equal(operator1, calculator.getOperator('myOperator1'));
+            assert.strictEqual(operator2, calculator.getOperator(('myOperator2')));
+            assert.notStrictEqual(operator2, calculator.getOperator(('myOperator1')));
         });
-    });
 
-    describe('#getOperator()', () => {
-        it('Throw Error when no operator with give name existed', () => {
-            assert.throws(function () {
-                calculator.getOperator('SomeInvalidOperator');
-            }, 'Operator [SomeInvalidOperator] is not existed');
-        })
+        it('Throw error if not existed operator', () => {
+            assert.throws(function() {
+                calculator.getOperator('InvalidOperator');
+            }, 'Operator [InvalidOperator] not existed');
+        });
+
+
     });
 
     describe('#calculate()', () => {
 
+            let fakeOperateMethod = signon.stub().returns('some result');
+            let fakeOperatorStub = {
+                operate: fakeOperateMethod
+            };
+            calculator.setOperator('myoperator', fakeOperatorStub);
 
-        let fakeOperateMethod = signon.stub().returns('some result');
-        let stubOperator = {
-            operate: fakeOperateMethod
-        };
-
-        calculator.addOperator('myOperator', stubOperator);
-
-
-        it('can run operator correctly', () => {
-
-            let result = calculator.calculate('myOperator', 1, 4);
-
-            assert.equal('some result', result);
-            assert.ok(fakeOperateMethod.calledOnce);
-            assert.ok(fakeOperateMethod.calledWith(1, 4));
+            it('Can run operator correctly', () => {
+                assert.equal('some result', calculator.calculate('myoperator', 1, 2));
+                assert.ok(fakeOperateMethod.calledOnce);
+                assert.ok(fakeOperateMethod.calledWith(1, 2));
+            });
         })
-    })
-});
 
+});
 

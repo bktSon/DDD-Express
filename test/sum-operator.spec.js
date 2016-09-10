@@ -1,19 +1,17 @@
 'use strict';
-
 const assert = require('chai').assert;
-
 const SumOperator = require('./../src/sum-operator');
 
-describe('SumOperator', () => {
-    let operator = new SumOperator();
+let sumOperator   = new SumOperator;
 
+describe('Sumoperator', () => {
     describe('#operate()', () => {
-        it('Return 5 with passing 1, 4', () => {
-            assert.equal(5, operator.operate(1, 4));
+        it('must return 5 when sum 1,4', () => {
+            assert.equal(5, sumOperator.operate(1, 4));
         });
 
-        it('Return 6 with passing 2, 4', () => {
-            assert.equal(6, operator.operate(2, 4));
-        });
-    });
+        it('must not return 5 when sum 1,2', () => {
+            assert.notEqual(5, sumOperator.operate(1, 2));
+        })
+    })
 });
